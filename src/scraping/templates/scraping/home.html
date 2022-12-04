@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Вакансии
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form action="">
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Показать</button>
+            </form>
+        </div>
+    </div>
+        {% if object_list %}
+        {% for obj in object_list %}
+            <div class="card my-3">
+                <div class="card-header">
+                    <a href="{{ obj.url }}" target="_blank">{{ obj.title }}</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ obj.company }}</h5>
+                    <h5 class="card-title" style="color: red">{{ obj.money }}</h5>
+                    <p class="card-text">{{ obj.description }}</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Добавлено: {{ obj.timestamp|date:'d M Y' }} | Тег: {{ obj.language }} | Город: {{ obj.city.name }}
+                </div>
+            </div>
+        {% endfor %}
+        {% endif %}
+{% endblock %}
