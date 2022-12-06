@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Вакансии
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form action="">
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Показать</button>
+            </form>
+        </div>
+    </div>
+    {% if object_list %}
+        {% for obj in object_list %}
+            <div class="card my-3">
+                <div class="card-header">
+                    <a href="{{ obj.url }}" target="_blank">{{ obj.title }}</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ obj.company }}</h5>
+                    <h5 class="card-title" style="color: red">{{ obj.money }}</h5>
+                    <p class="card-text">{{ obj.description }}</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Добавлено: {{ obj.timestamp|date:'d M Y' }} | Тег: {{ obj.language }} | Город: {{ obj.city.name }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row my-5">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if object_list.has_previous %}
+                        <li class="page-item">
+                        <a class="page-link" href="?city={{ city }}&language={{ language }}&page=1">&laquo; FIRST</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ object_list.previous_page_number }}">previous</a>
+                        </li>
+                    {% endif %}
+
+                        {% for page in object_list.paginator.page_range %}
+                            <li class="page-item
+                            {% if object_list.number == page %}
+                            active
+                            {% endif %}
+                            " aria-current="page">
+                            <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+
+                    {% if object_list.has_next %}
+                        <li class="page-item">
+                        <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ object_list.next_page_number }}">next</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+{% endblock %}

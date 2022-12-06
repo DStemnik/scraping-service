@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h4 class="text-center my-3">Вы успешно зарегистрировались</h4>
+            <p>Пользователь {{ new_user.email }} добавлен.</p>
+            <p>Теперь вы можете <a href="{% url 'login' %}">Войти</a></p>
+        </div>
+    </div>
+{% endblock %}

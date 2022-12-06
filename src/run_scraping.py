@@ -41,13 +41,8 @@ def get_urls(_settings):
     return urls
 
 
-
-
 settings = get_settings()
 url_list = get_urls(settings)
-
-import time
-start = time.time()
 
 jobs, errors = [], []
 
@@ -61,10 +56,9 @@ jobs, errors = [], []
 
 
 async def pars(value):
-    func, url, city, language = value
     # Выполняем функцию ассинронно (func, *args, **kwargs)
     # Вместо loop.run_in_execute()
-    job, err = await asyncio.to_thread(func, url, city, language)
+    job, err = await asyncio.to_thread(*value)
     errors.extend(err)
     jobs.extend(job)
 
@@ -78,8 +72,6 @@ async def main():
     await asyncio.gather(*tasks)
 
 asyncio.run(main())
-
-print(time.time()-start)
 
 for job in jobs:
     v = Vacancy(**job)

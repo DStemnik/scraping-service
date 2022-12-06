@@ -6,8 +6,14 @@
 
 {% block body %}
     <div class="row">
+        <div class="col">
+            <h2 class="text-center my-3">Сервис по сбору и рассылки вакансий</h2>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 mx-auto">
-            <form action="">
+            <h4 class="text-center my-3">Для просмотра доступных вакансий заполните форму</h4>
+            <form action="{% url 'list' %}">
                 <div class="form-group">
                     {{ form.as_p }}
                 </div>
@@ -15,21 +21,4 @@
             </form>
         </div>
     </div>
-        {% if object_list %}
-        {% for obj in object_list %}
-            <div class="card my-3">
-                <div class="card-header">
-                    <a href="{{ obj.url }}" target="_blank">{{ obj.title }}</a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ obj.company }}</h5>
-                    <h5 class="card-title" style="color: red">{{ obj.money }}</h5>
-                    <p class="card-text">{{ obj.description }}</p>
-                </div>
-                <div class="card-footer text-muted">
-                    Добавлено: {{ obj.timestamp|date:'d M Y' }} | Тег: {{ obj.language }} | Город: {{ obj.city.name }}
-                </div>
-            </div>
-        {% endfor %}
-        {% endif %}
 {% endblock %}
